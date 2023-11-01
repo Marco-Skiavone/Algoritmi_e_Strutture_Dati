@@ -59,10 +59,14 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 		if (e == null || !contains(e)){
 			return false;
 		}
+		int i = finder.get(e);
 		swap(finder.get(e), queue.size()-1);
 		if (!finder.remove(e, finder.get(e)) || !(queue.remove(queue.size()-1)).equals(e))
 			return false;
-		heapify(0);
+		while (i >= 0 && comparator.compare(queue.get(parent(i)), queue.get(i)) < 0) {
+			swap(i, parent(i));
+			i = parent(i);
+		}
 		return true;
 	}
 
@@ -102,20 +106,20 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 	
 	// --------- aux. methods -----------
 
-	/** Ritorna l'indice del genitore. */
+	/** @return index of the parent */
 	private int parent(int pos) { 						// DONE
 		if(pos % 2 == 0)
 			return pos > 1 ? (pos / 2) - 1 : 0;
 		return pos > 1 ? (pos / 2) : 0;
 	}	
 
-	/** Ritorna l'indice del figlio sinistro. */
+	/** @return index of the left son */
 	private int left(int pos) { 						// DONE
 		int ret = (pos * 2) + 1;
 		return ret < queue.size() ? ret : pos;
 	}	
 
-	/** Ritorna l'indice del figlio destro. */
+	/** @returns index of the right son. */
 	private int right(int pos) { 						// DONE
 		int ret = (pos * 2) + 2;
 		return ret < queue.size() ? ret : pos;

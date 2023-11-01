@@ -1,4 +1,4 @@
-SOURCES = src/*.java src/unit_test/*.java
+ SOURCES = src/*.java src/unit_test/*.java
 v = ./build/italian_dist_graph.csv
 
 #env:
